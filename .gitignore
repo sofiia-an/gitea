@@ -111,3 +111,6 @@ prime/
 
 # Manpage
 /man
+
+#DB
+mysql/

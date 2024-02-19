@@ -120,9 +120,10 @@ GO_TEST_PACKAGES ?= $(filter-out $(shell $(GO) list code.gitea.io/gitea/models/m
                 code.gitea.io/gitea/tests \
                 code.gitea.io/gitea/tests/integration \
                 code.gitea.io/gitea/tests/e2e \
-                code.gitea.io/gitea/modules/indexer/issues/elasticsearch \
-                code.gitea.io/gitea/modules/indexer/issues/meilisearch \
-                code.gitea.io/gitea/models/asymkey, \
+                code.gitea.io/gitea/models/asymkey \
+                code.gitea.io/gitea/services \
+                code.gitea.io/gitea/routers \
+                code.gitea.io/gitea/modules/indexer/, \
                 $(shell $(GO) list ./... | grep -v /vendor/))
 
 FOMANTIC_WORK_DIR := web_src/fomantic

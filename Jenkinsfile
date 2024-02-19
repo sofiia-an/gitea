@@ -15,9 +15,6 @@ pipeline {
         
         
         stage('Unit Test') {
-            when {
-                branch 'dev'
-            }
             steps {
                 echo 'Unit tests begin now ..'
                 sh 'TAGS="bindata sqlite sqlite_unlock_notify" make test'
@@ -25,9 +22,6 @@ pipeline {
         }
         
         stage('Integration Test') {
-            when {
-                branch 'main'
-            }
             steps {
                 echo 'Integration tests begin now....'
                 sh 'make test-sqlite'

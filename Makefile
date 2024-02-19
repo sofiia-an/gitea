@@ -125,10 +125,6 @@ GO_TEST_PACKAGES ?= $(filter-out \
     code.gitea.io/gitea/modules/indexer/issues/meilisearch \
     code.gitea.io/gitea/models/asymkey \
     code.gitea.io/gitea/services \
-    code.gitea.io/gitea/routers \
-    code.gitea.io/gitea/modules/indexer \
-    code.gitea.io/gitea/models/asymkey \
-    code.gitea.io/gitea/services \
     code.gitea.io/gitea/routers, \
     $(shell $(GO) list ./... | grep -v /vendor/))
 

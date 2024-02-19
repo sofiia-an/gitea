@@ -115,17 +115,22 @@ LINUX_ARCHS ?= linux/amd64,linux/386,linux/arm-5,linux/arm-6,linux/arm64
 
 GO_PACKAGES ?= $(filter-out code.gitea.io/gitea/tests/integration/migration-test code.gitea.io/gitea/tests code.gitea.io/gitea/tests/integration code.gitea.io/gitea/tests/e2e,$(shell $(GO) list ./... | grep -v /vendor/))
 #GO_TEST_PACKAGES ?= $(filter-out $(shell $(GO) list code.gitea.io/gitea/models/migrations/...) code.gitea.io/gitea/tests/integration/migration-test code.gitea.io/gitea/tests code.gitea.io/gitea/tests/integration code.gitea.io/gitea/tests/e2e,$(shell $(GO) list ./... | grep -v /vendor/))
-GO_TEST_PACKAGES ?= $(filter-out $(shell $(GO) list code.gitea.io/gitea/models/migrations/...) \
-                code.gitea.io/gitea/tests/integration/migration-test \
-                code.gitea.io/gitea/tests \
-                code.gitea.io/gitea/tests/integration \
-                code.gitea.io/gitea/tests/e2e \
-                code.gitea.io/gitea/models/asymkey \
-                code.gitea.io/gitea/services \
-                code.gitea.io/gitea/routers \
-                code.gitea.io/gitea/modules/indexer
-								code.gitea.io/gitea/modules/indexer/issues/meilisearch, \
-                $(shell $(GO) list ./... | grep -v /vendor/))
+GO_TEST_PACKAGES ?= $(filter-out \
+    $(shell $(GO) list code.gitea.io/gitea/models/migrations/...) \
+    code.gitea.io/gitea/tests/integration/migration-test \
+    code.gitea.io/gitea/tests \
+    code.gitea.io/gitea/tests/integration \
+    code.gitea.io/gitea/tests/e2e \
+    code.gitea.io/gitea/modules/indexer/issues/elasticsearch \
+    code.gitea.io/gitea/modules/indexer/issues/meilisearch \
+    code.gitea.io/gitea/models/asymkey \
+    code.gitea.io/gitea/services \
+    code.gitea.io/gitea/routers \
+    code.gitea.io/gitea/modules/indexer \
+    code.gitea.io/gitea/models/asymkey \
+    code.gitea.io/gitea/services \
+    code.gitea.io/gitea/routers, \
+    $(shell $(GO) list ./... | grep -v /vendor/))
 
 FOMANTIC_WORK_DIR := web_src/fomantic
 

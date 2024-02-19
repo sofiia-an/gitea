@@ -12,7 +12,6 @@ RUN apk --no-cache add \
 COPY ./ /app
 WORKDIR /app
 
-
 RUN TAGS="bindata" make build
 
 RUN go build contrib/environment-to-ini/environment-to-ini.go

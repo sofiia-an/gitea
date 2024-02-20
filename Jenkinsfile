@@ -6,10 +6,10 @@ pipeline {
         
     stages {
         
-        stage('Build with Docker') {
-            agent { dockerfile true }
+        stage('Build') {
             steps {
-                echo 'Building with Dockerfile'
+                sh 'make clean build'
+                echo 'Building with make'
             }
         }
         

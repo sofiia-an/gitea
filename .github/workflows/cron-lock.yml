@@ -3,6 +3,8 @@ name: cron-lock
 on:
   schedule:
 #    - cron: "0 0 * * *" # every day at 00:00 UTC
+     - cron: "0 0 1 1 *" #At 00:00 on day-of-month 1 in January.
+
   workflow_dispatch:
 
 permissions:

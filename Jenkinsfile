@@ -31,9 +31,14 @@ pipeline {
         }
 
         stage('App Deployment to Minikube') {
+          agent {
+                kubernetes {
+                    // Possible configs for kubernetes agent
+                }
+            }
             steps {
                 echo 'Deploying to Minikube....'
-                sh 'helm upgrade --install giteaapp ./minikube-app'
+                sh 'helm upgrade --install giteaapp ./minikube-app -n jenkins'
             }
         }
 

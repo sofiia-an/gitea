@@ -17,7 +17,7 @@ pipeline {
         stage('Unit Test') {
             steps {
                 echo 'Unit tests begin now ..'
-               // sh 'TAGS="bindata sqlite sqlite_unlock_notify" make test'
+                sh 'TAGS="bindata sqlite sqlite_unlock_notify" make test'
                 echo 'Unit tests done'
             }
         }
@@ -25,7 +25,7 @@ pipeline {
         stage('Integration Test') {
             steps {
                 echo 'Integration tests begin now....'
-               // sh 'make test-sqlite'
+                sh 'make test-sqlite'
                 echo 'Integration tests done.'
             }
         }
@@ -33,12 +33,25 @@ pipeline {
         stage('App Deployment to Minikube') {
           agent {
                 kubernetes {
-                    // Possible configs for kubernetes agent
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+              - name: helm
+                image: lachlanevenson/k8s-helm:v3.1.1
+                command:
+                - cat
+                tty: true
+            '''
                 }
             }
+            
             steps {
+                container('helm') { 
                 echo 'Deploying to Minikube....'
                 sh 'helm upgrade --install giteaapp ./minikube-app -n jenkins'
+            }
             }
         }
 

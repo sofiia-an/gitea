@@ -4,7 +4,7 @@ pipeline {
             nodejs 'NodeJS-21.0'
         }
     triggers {
-        github(branch: 'main')
+        githubPullRequest(branch: 'main')
         cron('H */12 * * *') // every 12 hours
     }
         

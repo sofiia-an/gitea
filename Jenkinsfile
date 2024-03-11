@@ -13,7 +13,7 @@ pipeline {
           when {
         expression { 
             echo "CHANGE_ID value: ${env.CHANGE_ID}"
-            return env.CHANGE_ID != null 
+            return env.CHANGE_TARGET != null && env.CHANGE_TARGET == 'main'
         }
           }
             steps {

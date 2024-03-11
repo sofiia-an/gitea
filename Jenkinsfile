@@ -13,7 +13,6 @@ pipeline {
               when {
                 expression { env.CHANGE_ID != null } 
               }
-          }
             steps {
                 sh 'make clean build'
                 echo 'Building with make'

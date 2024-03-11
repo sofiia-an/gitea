@@ -3,6 +3,10 @@ pipeline {
     tools { go '1.21.0'
             nodejs 'NodeJS-21.0'
         }
+    triggers {
+        github(branch: 'main')
+        cron('H */12 * * *') // every 12 hours
+    }
         
     stages {
         

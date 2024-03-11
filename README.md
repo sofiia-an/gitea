@@ -57,7 +57,7 @@
 ## Purpose
 
 The goal of this project is to make the easiest, fastest, and most
-painless way of setting up a self-hosted Git service..
+painless way of setting up a self-hosted Git service.
 
 As Gitea is written in Go, it works across **all** the platforms and
 architectures that are supported by Go, including Linux, macOS, and

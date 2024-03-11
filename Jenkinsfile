@@ -10,6 +10,9 @@ pipeline {
     stages {
         
         stage('Build') {
+          when {
+            expression { env.CHANGE_ID != null }
+              }
             steps {
                 sh 'make clean build'
                 echo 'Building with make'
@@ -18,6 +21,9 @@ pipeline {
         
         
         stage('Unit Test') {
+              when {
+                expression { env.CHANGE_ID != null } 
+              }
             steps {
                 echo 'Unit tests begin now ..'
                 sh 'TAGS="bindata sqlite sqlite_unlock_notify" make test'

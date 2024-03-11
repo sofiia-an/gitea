@@ -11,8 +11,11 @@ pipeline {
         
         stage('Build') {
           when {
-            expression { env.CHANGE_ID != null }
-              }
+        expression { 
+            echo "CHANGE_ID value: ${env.CHANGE_ID}"
+            return env.CHANGE_ID != null 
+        }
+          }
             steps {
                 sh 'make clean build'
                 echo 'Building with make'

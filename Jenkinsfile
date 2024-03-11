@@ -10,11 +10,9 @@ pipeline {
     stages {
         
         stage('Build') {
-          when {
-        expression { 
-            echo "CHANGE_ID value: ${env.CHANGE_ID}"
-            return env.CHANGE_TARGET != null && env.CHANGE_TARGET == 'main'
-        }
+              when {
+                expression { env.CHANGE_ID != null } 
+              }
           }
             steps {
                 sh 'make clean build'

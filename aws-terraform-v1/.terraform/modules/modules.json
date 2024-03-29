@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"elasticbeanstalk","Source":"./modules/elastic_beanstalk","Dir":"modules/elastic_beanstalk"},{"Key":"s3","Source":"./modules/s3","Dir":"modules/s3"},{"Key":"security_groups","Source":"./modules/security_groups","Dir":"modules/security_groups"}]}

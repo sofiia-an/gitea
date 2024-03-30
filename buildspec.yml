@@ -21,4 +21,4 @@ phases:
 
   post_build:
     commands:
-      - terraform apply -auto-approve tfplan
+      - echo "Completed, ready for deployment"

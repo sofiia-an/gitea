@@ -136,7 +136,7 @@ The official Gitea CLI is developed at [gitea/tea](https://gitea.com/gitea/tea).
 
 ## Backers
 
-Thank you to all our backers!! 🙏 [[Become a backer](https://opencollective.com/gitea#backer)]
+Thank you to all our backers!🙏 [[Become a backer](https://opencollective.com/gitea#backer)]
 
 <a href="https://opencollective.com/gitea#backers" target="_blank"><img src="https://opencollective.com/gitea/backers.svg?width=890"></a>
 

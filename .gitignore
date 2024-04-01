@@ -50,7 +50,7 @@ cpu.out
 /gitea-vet
 /debug
 /integrations.test
-/minikube-app/templates/secrets.yaml
+minikube-app/templates/secrets.yaml
 
 /bin
 /dist

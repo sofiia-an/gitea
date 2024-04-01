@@ -17,7 +17,7 @@ phases:
       - cd aws-terraform-v1/
       - terraform init
       - terraform validate
-      - terraform apply -auto-approve tfplan
+      - terraform apply 
 
   post_build:
     commands:

@@ -12,12 +12,13 @@ phases:
       - "unzip -o terraform.zip"
       - "cd $CODEBUILD_SRC_DIR"
 
-  build:
-    commands:
-      - cd aws-terraform-v1/
-      - terraform init
-      - terraform validate
-      - terraform apply 
+build:
+  commands:
+    - cd aws-terraform-v1/
+    - terraform init
+    - terraform validate
+    - terraform apply -auto-approve tfplan
+
 
   post_build:
     commands:

@@ -21,13 +21,13 @@ phases:
     commands:
       - terraform plan -out=tfplan
 
+  post_build:
+    commands:
+      - aws s3 cp tfplan s3://gitea-artifact-tf/tfplan
+      - echo "Completed, ready for deployment"
+
 artifacts:
   files:
     - tfplan
   discard-paths: yes
   base-directory: aws-terraform-v1/
-
-post_build:
-  commands:
-    - aws s3 cp tfplan s3://gitea-artifact-tf/tfplan
-    - echo "Completed, ready for deployment"

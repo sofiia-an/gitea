@@ -4,21 +4,30 @@ phases:
   install:
     runtime-versions:
       python: 3.11
-
-  pre_build:
     commands:
       - "cd /usr/bin"
       - "curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
       - "unzip -o terraform.zip"
       - "cd $CODEBUILD_SRC_DIR"
+      - cd aws-terraform-v1/
+      
+
+  pre_build:
+    commands:
+      - terraform init
+      - terraform validate
 
   build:
     commands:
-      - cd aws-terraform-v1/
-      - terraform init
-      - terraform validate
       - terraform plan -out=tfplan
 
-  post_build:
-    commands:
-      - echo "Completed, ready for deployment"
+artifacts:
+  files:
+    - tfplan
+  discard-paths: yes
+  base-directory: aws-terraform-v1/
+
+post_build:
+  commands:
+    - aws s3 cp tfplan s3://gitea-artifact-tf/tfplan
+    - echo "Completed, ready for deployment"

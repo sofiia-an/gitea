@@ -26,6 +26,7 @@ phases:
         else
           echo "Elastic Beanstalk application 'Gitea-Application' does not exist. Proceeding with deploy stage."
           # Proceed with deployment
+        fi
           
       - terraform apply -auto-approve tfplan
 

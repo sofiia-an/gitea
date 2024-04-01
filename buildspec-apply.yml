@@ -17,7 +17,7 @@ phases:
       - terraform init
       - terraform validate
       - |
-        if aws elasticbeanstalk describe-applications --application-names Gitea-Application --region eu-west-2 > /dev/null 2>&1; then
+        if aws elasticbeanstalk describe-applications --region eu-west-2 | grep "Gitea-Application"; then
           echo "Elastic Beanstalk application 'Gitea-Application' already exists. Skipping deploy stage."
           export SKIP_DEPLOY="true"  # Skip deploy stage
         else

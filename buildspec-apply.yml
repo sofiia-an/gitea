@@ -19,10 +19,10 @@ phases:
       - |
         if aws elasticbeanstalk describe-applications --application-names Gitea-Application --region eu-west-2 > /dev/null 2>&1; then
           echo "Elastic Beanstalk application 'Gitea-Application' already exists. Skipping deploy stage."
-          exit 1  # Skip deploy stage
+          exit 0  # Skip deploy stage
         else
           echo "Elastic Beanstalk application 'Gitea-Application' does not exist. Proceeding with deploy stage."
-          # Proceed with deployment
+          exit 1 # Proceed with deployment
         fi
 
   build:

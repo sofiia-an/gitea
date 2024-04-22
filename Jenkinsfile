@@ -27,7 +27,7 @@ pipeline {
                 script{
                     echo "Deploying binary to S3 bucket with version ${VERSION}..."
                     withAWS(credentials: 'aws-credentials', region: AWS_DEFAULT_REGION) {
-                        sh ''
+//                        sh 'aws s3 cp gitea s3://${BUCKET_NAME}/gitea-${VERSION}'
                     }
                 }
             }
@@ -54,7 +54,7 @@ pipeline {
                     dir('ansible-terraform-aws') {
                         withAWS(credentials: 'aws-credentials', region: AWS_DEFAULT_REGION) {
                             sh 'ansible-galaxy collection install amazon.aws:==3.3.1 --force'
-                            sh ''
+//                            sh 'ansible-playbook -i inventory.ini ansible/playbook.yaml'
                         }
                     } 
                 }

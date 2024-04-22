@@ -1,0 +1,126 @@
+- name: Deploy Binary Release from S3 bucket to Ubuntu EC2
+  hosts: aws_ec2
+  become: yes
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - wget
+        - unzip
+        - git
+
+    - name: Create directory for binary
+      file:
+        path: /opt/gitea
+        state: directory
+
+    - name: Allow all access to tcp port 3000
+      ufw:
+        rule: allow
+        port: '3000'
+        proto: tcp
+
+    - name: Populate Apt's Cache with package definitions to avoid "no such package" errors
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+        force_apt_get: true
+
+    - name: Install boto, boto3, and botocore
+      pip:
+        name: "{{ item }}"
+      loop:
+        - boto
+        - boto3
+        - botocore
+
+    - name: Get list of objects in S3 bucket
+      amazon.aws.aws_s3:
+        bucket: "gitea-binary"
+        mode: list
+        access_key: "{{ (lookup('env','AWS_ACCESS_KEY')) }}"
+        secret_key: "{{ (lookup('env' ,'AWS_SECRET_KEY')) }}"
+      register: s3_objects
+
+    - set_fact:
+        s3_keys: "{{ s3_objects.s3_keys }}"
+
+    - name: Set the latest object as the last key in the list
+      set_fact:
+        latest_object: "{{ s3_keys[-1] }}"
+
+    - debug:
+        var: latest_object
+
+    - name: Download latest binary release from S3
+      amazon.aws.aws_s3:
+        access_key: "{{ (lookup('env','AWS_ACCESS_KEY')) }}"
+        secret_key: "{{ (lookup('env' ,'AWS_SECRET_KEY')) }}"
+        bucket: "gitea-binary"
+        object: "{{ latest_object }}"
+        dest: /opt/gitea/gitea
+        mode: get
+
+    - name: Make binary executable
+      file:
+        path: /opt/gitea/gitea
+        mode: +x
+
+    - name: Create gitea user
+      command: >
+        adduser
+        --system
+        --shell /bin/bash
+        --gecos 'Git Version Control'
+        --group
+        --disabled-password
+        --home /home/git
+        git
+
+    - name: Create directory for gitea data
+      file:
+        path: /var/lib/gitea
+        state: directory
+
+    - name: Create directories for gitea custom, data, and log
+      file:
+        path: /var/lib/gitea/{{ item }}
+        state: directory
+        owner: git
+        group: git
+        mode: 750
+      with_items:
+        - custom
+        - data
+        - log
+
+    - name: Create directory for gitea configuration
+      file:
+        path: /etc/gitea
+        state: directory
+        owner: root
+        group: git
+        mode: 770
+
+    - name: Set GITEA_WORK_DIR environment variable
+      lineinfile:
+        path: /etc/environment
+        line: 'GITEA_WORK_DIR=/var/lib/gitea/'
+
+    - name: Set capabilities for gitea binary
+      command: "sudo setcap 'cap_net_bind_service=+ep' /opt/gitea/gitea"
+
+    - name: Run gitea binary on remote host
+      command: "nohup sudo -u git ./gitea web"
+      args:
+        chdir: /opt/gitea
+      async: 3600
+      poll: 0
+      register: gitea_process

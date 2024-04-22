@@ -46,7 +46,7 @@
         bucket: "gitea-binary"
         mode: list
         access_key: "{{ (lookup('env','AWS_ACCESS_KEY')) }}"
-        secret_key: "{{ (lookup('env' ,'AWS_SECRET_KEY')) }}"
+        secret_key: "{{ (lookup('env' ,'AWS_SECRET_ACCESS_KEY')) }}"
       register: s3_objects
 
     - set_fact:
@@ -62,7 +62,7 @@
     - name: Download latest binary release from S3
       amazon.aws.aws_s3:
         access_key: "{{ (lookup('env','AWS_ACCESS_KEY')) }}"
-        secret_key: "{{ (lookup('env' ,'AWS_SECRET_KEY')) }}"
+        secret_key: "{{ (lookup('env' ,'AWS_SECRET_ACCESS_KEY')) }}"
         bucket: "gitea-binary"
         object: "{{ latest_object }}"
         dest: /opt/gitea/gitea
